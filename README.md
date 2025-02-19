@@ -24,7 +24,7 @@ python main.py --simulate --gui
 | `--serial_port`  | `str`   | `/dev/ttyUSB0` | UART serial port |
 | `--server_port`  | `int`   | `7100`        | API server port |
 | `--host`         | `str`   | `localhost`   | API host address |
-| `--baud_rate`    | `int`   | `115200`      | UART baudrate |
+| `--baudrate`    | `int`   | `115200`      | UART baudrate |
 | `--simulation`   | `bool`  | `False`       | Enable simulation mode |
 | `--gui`          | `bool`  | `False`       | Open a graphic interface |
 
