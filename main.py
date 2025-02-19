@@ -2,9 +2,11 @@ import os
 import argparse
 import threading
 import logging
+import tkinter as tk
 
 from uart import UARTHandler
 from api import create_api
+from gui import GUI
 
 logging.basicConfig(level=logging.INFO)
 
@@ -21,6 +23,8 @@ if __name__ == '__main__':
     ap.add_argument('--host', type=str, default=os.getenv('HOST', 'localhost'), help='Server host')
     ap.add_argument('--server_port', type=int, default=os.getenv('SERVER_PORT', 7100), help='Server port')
     # ap.add_argument('--database_path', type=str, default=os.getenv('DATABASE_PATH', 'database.db'), help='Database path')
+
+    ap.add_argument('--gui', action='store_true', help='Open a graphic interface')
     args = ap.parse_args()
 
     # Shared variables
@@ -37,12 +41,15 @@ if __name__ == '__main__':
     ))
     api_thread.start()
 
-    uart_thread.join()
-    api_thread.join()
-
-    # Keep main thread alive
-    try:
-        while True:
-            pass
-    except KeyboardInterrupt:
-        logging.info('Shutting down...')
+    if args.gui:
+        root = tk.Tk()
+        app = GUI(root)
+        root.protocol('WM_DELETE_WINDOW', app.on_close)
+        root.mainloop()
+    else:
+        # Keep main thread alive
+        try:
+            while True:
+                pass
+        except KeyboardInterrupt:
+            logging.info('Shutting down...')
